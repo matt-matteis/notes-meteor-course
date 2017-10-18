@@ -3,13 +3,15 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import { browserHistory } from 'react-router';
 import { Tracker } from 'meteor/tracker';
+import { Session } from 'meteor/session';
 import { routes, onAuthChange } from './../imports/routes/routes';
 import '../imports/startup/simple-schema-configuration.js';
 
 
 Tracker.autorun(() => {
   const isAuthenticated = !!Meteor.userId();
-  onAuthChange(isAuthenticated);
+  const currentPagePrivacy = Session.get('currentPagePrivacy');
+  onAuthChange(isAuthenticated, currentPagePrivacy);
 });
 
 Tracker.autorun(() => {
